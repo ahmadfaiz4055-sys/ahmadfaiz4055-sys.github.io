@@ -40,8 +40,20 @@
     <a href="index.html">kembali ke menu utama </a>
     <video controls>
         <source src="Volcanic.mp4" type="video/mp4">
-        Browser tidak mendukung video.
     </video>
+    
+    <script>
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function() {
+        navigator.serviceWorker.register(
+            "./service-worker.js"
+        ).catch(function(error) {
+            console.log("Service Worker gagal:", error);
+        });
+    });
+}
+</script>
+
     
 </body>
 </html>
