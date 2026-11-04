@@ -1,8 +1,10 @@
-const CACHE_NAME = "video-offline-v1";
+const CACHE_NAME = "video-offline-v2";
 
 const FILES = [
     "./",
     "./index.html",
+    "./Praktikum4.html",
+    "./poster.jpg",
     "./Volcanic.mp4"
 ];
 
@@ -20,7 +22,17 @@ self.addEventListener("install", function(event) {
 
 self.addEventListener("activate", function(event) {
     event.waitUntil(
-        self.clients.claim()
+        caches.keys().then(function(names) {
+            return Promise.all(
+                names.map(function(name) {
+                    if (name !== CACHE_NAME) {
+                        return caches.delete(name);
+                    }
+                })
+            );
+        }).then(function() {
+            return self.clients.claim();
+        })
     );
 });
 
